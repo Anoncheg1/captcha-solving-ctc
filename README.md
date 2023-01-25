@@ -96,7 +96,7 @@ Accuracy 0.903364969801553
 ```
 
 # Naive categorical encoding
-
+two outputs - (6, 20) for label and (2,) for encode label length
 ```
 __________________________________________________________________________________________________
  Layer (type)                   Output Shape         Param #     Connected to                     
