@@ -16,9 +16,8 @@ Number of unique characters:  20
 Characters present:  ['2', '4', '5', '6', '7', '8', '9', 'б', 'в', 'г', 'д', 'ж', 'к', 'л', 'м', 'н', 'п', 'р', 'с', 'т']
 (16967,)
 ```
-
 # CTC encoding
-Dense (50, 20) -> 
+Dense (50, 20) ->
 
 Bidirectional(keras.layers.LSTM(64, return_sequences=True, dropout=0.25)) - receive only (n1,n2) shape, whre n1 - called "input sequence"/"timestamps"
 
@@ -35,36 +34,36 @@ comparision of LSTM
 CTC uses keras.backend.ctc_decode to decode softmax output trained with keras.backend.ctc_batch_cost loss.
 ```
 __________________________________________________________________________________________________
- Layer (type)                   Output Shape         Param #     Connected to                     
+ Layer (type)                   Output Shape         Param #     Connected to
 ==================================================================================================
- image (InputLayer)             [(None, 200, 60, 1)  0           []                               
-                                ]                                                                 
-                                                                                                  
- Conv1 (Conv2D)                 (None, 200, 60, 16)  160         ['image[0][0]']                  
-                                                                                                  
- pool1 (MaxPooling2D)           (None, 100, 30, 16)  0           ['Conv1[0][0]']                  
-                                                                                                  
- Conv2 (Conv2D)                 (None, 100, 30, 32)  4640        ['pool1[0][0]']                  
-                                                                                                  
- dropout (Dropout)              (None, 100, 30, 32)  0           ['Conv2[0][0]']                  
-                                                                                                  
- pool2 (MaxPooling2D)           (None, 50, 15, 32)   0           ['dropout[0][0]']                
-                                                                                                  
- reshape (Reshape)              (None, 50, 480)      0           ['pool2[0][0]']                  
-                                                                                                  
- dense1 (Dense)                 (None, 50, 20)       9620        ['reshape[0][0]']                
-                                                                                                  
- dropout_1 (Dropout)            (None, 50, 20)       0           ['dense1[0][0]']                 
-                                                                                                  
- bidirectional (Bidirectional)  (None, 50, 128)      43520       ['dropout_1[0][0]']              
-                                                                                                  
- label (InputLayer)             [(None, None)]       0           []                               
-                                                                                                  
- dense2 (Dense)                 (None, 50, 22)       2838        ['bidirectional[0][0]']          
-                                                                                                  
- ctc_loss (CTCLayer)            (None, 50, 22)       0           ['label[0][0]',                  
-                                                                  'dense2[0][0]']                 
-                                                                                                  
+ image (InputLayer)             [(None, 200, 60, 1)  0           []
+                                ]
+
+ Conv1 (Conv2D)                 (None, 200, 60, 16)  160         ['image[0][0]']
+
+ pool1 (MaxPooling2D)           (None, 100, 30, 16)  0           ['Conv1[0][0]']
+
+ Conv2 (Conv2D)                 (None, 100, 30, 32)  4640        ['pool1[0][0]']
+
+ dropout (Dropout)              (None, 100, 30, 32)  0           ['Conv2[0][0]']
+
+ pool2 (MaxPooling2D)           (None, 50, 15, 32)   0           ['dropout[0][0]']
+
+ reshape (Reshape)              (None, 50, 480)      0           ['pool2[0][0]']
+
+ dense1 (Dense)                 (None, 50, 20)       9620        ['reshape[0][0]']
+
+ dropout_1 (Dropout)            (None, 50, 20)       0           ['dense1[0][0]']
+
+ bidirectional (Bidirectional)  (None, 50, 128)      43520       ['dropout_1[0][0]']
+
+ label (InputLayer)             [(None, None)]       0           []
+
+ dense2 (Dense)                 (None, 50, 22)       2838        ['bidirectional[0][0]']
+
+ ctc_loss (CTCLayer)            (None, 50, 22)       0           ['label[0][0]',
+                                                                  'dense2[0][0]']
+
 ==================================================================================================
 Total params: 60,778
 Trainable params: 60,778
@@ -99,44 +98,44 @@ Accuracy 0.903364969801553
 two outputs - (6, 20) for label and (2,) for encode label length
 ```
 __________________________________________________________________________________________________
- Layer (type)                   Output Shape         Param #     Connected to                     
+ Layer (type)                   Output Shape         Param #     Connected to
 ==================================================================================================
- image (InputLayer)             [(None, 200, 60, 1)  0           []                               
-                                ]                                                                 
-                                                                                                  
- Conv1 (Conv2D)                 (None, 200, 60, 16)  160         ['image[0][0]']                  
-                                                                                                  
- pool1 (MaxPooling2D)           (None, 100, 30, 16)  0           ['Conv1[0][0]']                  
-                                                                                                  
- Conv2 (Conv2D)                 (None, 100, 30, 32)  4640        ['pool1[0][0]']                  
-                                                                                                  
- dropout (Dropout)              (None, 100, 30, 32)  0           ['Conv2[0][0]']                  
-                                                                                                  
- pool2 (MaxPooling2D)           (None, 50, 15, 32)   0           ['dropout[0][0]']                
-                                                                                                  
- reshape (Reshape)              (None, 50, 480)      0           ['pool2[0][0]']                  
-                                                                                                  
- dense1 (Dense)                 (None, 50, 32)       15392       ['reshape[0][0]']                
-                                                                                                  
- dropout_1 (Dropout)            (None, 50, 32)       0           ['dense1[0][0]']                 
-                                                                                                  
- flatten (Flatten)              (None, 1600)         0           ['dropout_1[0][0]']              
-                                                                                                  
- dense11 (Dense)                (None, 120)          192120      ['flatten[0][0]']                
-                                                                                                  
- reshape2 (Reshape)             (None, 6, 20)        0           ['dense11[0][0]']                
-                                                                                                  
- dense12 (Dense)                (None, 2)            3202        ['flatten[0][0]']                
-                                                                                                  
- label (InputLayer)             [(None, 6, 20)]      0           []                               
-                                                                                                  
- count (InputLayer)             [(None, 2)]          0           []                               
-                                                                                                  
- loss_layer (LossLayer)         (None, 6, 20)        0           ['reshape2[0][0]',               
-                                                                  'dense12[0][0]',                
-                                                                  'label[0][0]',                  
-                                                                  'count[0][0]']                  
-                                                                                                  
+ image (InputLayer)             [(None, 200, 60, 1)  0           []
+                                ]
+
+ Conv1 (Conv2D)                 (None, 200, 60, 16)  160         ['image[0][0]']
+
+ pool1 (MaxPooling2D)           (None, 100, 30, 16)  0           ['Conv1[0][0]']
+
+ Conv2 (Conv2D)                 (None, 100, 30, 32)  4640        ['pool1[0][0]']
+
+ dropout (Dropout)              (None, 100, 30, 32)  0           ['Conv2[0][0]']
+
+ pool2 (MaxPooling2D)           (None, 50, 15, 32)   0           ['dropout[0][0]']
+
+ reshape (Reshape)              (None, 50, 480)      0           ['pool2[0][0]']
+
+ dense1 (Dense)                 (None, 50, 32)       15392       ['reshape[0][0]']
+
+ dropout_1 (Dropout)            (None, 50, 32)       0           ['dense1[0][0]']
+
+ flatten (Flatten)              (None, 1600)         0           ['dropout_1[0][0]']
+
+ dense11 (Dense)                (None, 120)          192120      ['flatten[0][0]']
+
+ reshape2 (Reshape)             (None, 6, 20)        0           ['dense11[0][0]']
+
+ dense12 (Dense)                (None, 2)            3202        ['flatten[0][0]']
+
+ label (InputLayer)             [(None, 6, 20)]      0           []
+
+ count (InputLayer)             [(None, 2)]          0           []
+
+ loss_layer (LossLayer)         (None, 6, 20)        0           ['reshape2[0][0]',
+                                                                  'dense12[0][0]',
+                                                                  'label[0][0]',
+                                                                  'count[0][0]']
+
 ==================================================================================================
 Total params: 215,514
 Trainable params: 215,514
@@ -164,4 +163,3 @@ test examples 1159
 Accuracy 0.11044003451251079
 
 ```
-
