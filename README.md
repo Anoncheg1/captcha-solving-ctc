@@ -32,6 +32,7 @@ comparision of LSTM
 - lstm (LSTM)                    (None, 64)           24832       ['dropout_1[0][0]'] - output corresponding to the last timestep, containing information about the entire input sequence
 - bidirectional (Bidirectional)  (None, 50, 128)      49664       ['dropout_1[0][0]']   - bidirectual
 
+CTC uses keras.backend.ctc_decode to decode softmax output trained with keras.backend.ctc_batch_cost loss.
 ```
 __________________________________________________________________________________________________
  Layer (type)                   Output Shape         Param #     Connected to                     
